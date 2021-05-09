@@ -1,3 +1,4 @@
+import * as employeeData from "./singInData.json"
 import { ChewyPage } from "./pageObjects/chewy-page-object-model";
 const chromedriver = require("chromedriver");
 import { WebDriver, Builder, Capabilities } from "selenium-webdriver";
@@ -6,7 +7,8 @@ const driver:WebDriver = new Builder()
   .build();
 
 
-describe("Chewy page tests suites", ()=>{
+describe("Chewy page tests suites", ()=> {
+
     const page = new ChewyPage(driver);
     beforeEach(async () => {
       await page.navigate();
@@ -15,11 +17,16 @@ describe("Chewy page tests suites", ()=>{
       await page.driver.quit();
     });
     
+    test("siginingin returning customer", async () =>{
+      await page.navigate();
+      await page.clickOnAccountButton();
+      await page.signIn();
+      expect(await page.getHeaderText()).toContain(`Hi, ${employeeData.name}!`)
+
+    });
+
     test("the search field works", async ()=> {
-        await page.navigate();
-        await page.doSearch("Douxo");
+       await page.doSearch("Douxo");
         expect(await page.getresults()).toContain("Douxo");
         })
-
-
 })
