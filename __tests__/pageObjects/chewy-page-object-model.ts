@@ -27,6 +27,11 @@ export class ChewyPage {
     hiAccountName: By = By.css(".sfw-header-nav-trigger--account__label")
     searchField:By = By.css("#search-autocomplete");
     result:By = By.css(".results-products");
+    brandNavigation:By = By.css("#core-nav-1");
+    dealsNavigation:By = By.css ("#core-nav-2");
+    brandHeader:By = By.xpath("//div[@id='page-content']/h1");
+    dealsItem:By = By.xpath("//div[@id='tns1-item0']/a/div[2]/p")
+
 
     constructor(driver: WebDriver) {
         this.driver = driver;
@@ -65,7 +70,22 @@ export class ChewyPage {
         await this.driver.wait(until.elementLocated(this.hiAccountName));
         return await (this.driver.findElement(this.hiAccountName)).getText();
     }
-
+    async clickOnDealsButton(){
+        await this.driver.wait(until.elementLocated(this.dealsNavigation));
+        await this.driver.findElement(this.dealsNavigation).click();
+        await this.driver.wait(until.elementLocated(this.dealsItem))
+    }
+    async clickOnBrandsButton() {
+        await this.driver.wait(until.elementLocated(this.brandNavigation));
+        await (await this.driver.findElement(this.brandNavigation)).click();
+        await this.driver.wait(until.elementLocated(this.brandHeader))
+    }
+    async getHeaderTextBrand() {
+        await this.driver.wait(until.elementLocated(this.brandHeader));
+        return await (this.driver.findElement(this.brandHeader)).getText();
+    }
+    async getItemText() {
+        await this.driver.wait(until.elementLocated(this.dealsItem));
+        return await (this.driver.findElement(this.dealsItem)).getText();
 }
-
-
+}
