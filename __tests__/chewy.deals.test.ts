@@ -5,17 +5,14 @@ const driver:WebDriver = new Builder()
   .withCapabilities(Capabilities.chrome())
   .build();
 
-    describe("Chewy page tests suites", ()=> {
+    describe("Chewy deals page", ()=> {
 
         const page = new ChewyPage(driver);
-        beforeEach(async () => {
-          await page.navigate();
-        });
         afterAll(async () => {
           await page.driver.quit();
         });
     
-    test("Deals Navigation Works", async () =>{
+    test("Deals Navigation Works,and has dog deals", async () =>{
       await page.navigate();
       await page.clickOnDealsButton();
       expect(await page.getItemText()).toContain("Dog Deals");
