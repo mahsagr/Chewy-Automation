@@ -5,12 +5,9 @@ const driver:WebDriver = new Builder()
   .withCapabilities(Capabilities.chrome())
   .build();
 
-    describe("Chewy page tests suites", ()=> {
+    describe("Chewy Brand page", ()=> {
 
         const page = new ChewyPage(driver);
-        beforeEach(async () => {
-          await page.navigate();
-        });
         afterAll(async () => {
           await page.driver.quit();
         });
