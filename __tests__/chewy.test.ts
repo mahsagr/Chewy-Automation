@@ -25,8 +25,9 @@ describe("Chewy page tests suites", ()=> {
 
     });
 
-    test("the search field works", async ()=> {
+    test("the search an item and adds it to the cart", async ()=> {
        await page.doSearch("Douxo");
         expect(await page.getresults()).toContain("Douxo");
+        expect(await page.addtoMyCart()).toEqual(1);
         })
 })
