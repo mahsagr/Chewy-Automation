@@ -27,6 +27,9 @@ export class ChewyPage {
     hiAccountName: By = By.css(".sfw-header-nav-trigger--account__label")
     searchField:By = By.css("#search-autocomplete");
     result:By = By.css(".results-products");
+    firstProduct: By =  By.css("article[data-position*='1']");
+    addToCart: By = By.css(".js-add-cart");
+    itemInCart: By = By.css(".sfw-header-nav-cart__badge");
     brandNavigation:By = By.css("#core-nav-1");
     dealsNavigation:By = By.css ("#core-nav-2");
     brandHeader:By = By.xpath("//div[@id='page-content']/h1");
@@ -70,6 +73,19 @@ export class ChewyPage {
         await this.driver.wait(until.elementLocated(this.hiAccountName));
         return await (this.driver.findElement(this.hiAccountName)).getText();
     }
+
+    async addtoMyCart() {    
+        await this.driver.wait(until.elementLocated(this.firstProduct));
+        await this.driver.findElement(this.firstProduct).click();
+        await this.driver.wait(until.elementLocated(this.addToCart));
+        const tt = this.driver.findElement(this.itemInCart);
+        let count1:number =+ await this.driver.findElement(this.itemInCart).getText();
+        await this.driver.findElement(this.addToCart).click();
+        await this.driver.wait(until.elementLocated(this.itemInCart));
+        let count2:number =+ await this.driver.findElement(this.itemInCart).getText();
+        return count2-count1;
+    }
+
     async clickOnDealsButton(){
         await this.driver.wait(until.elementLocated(this.dealsNavigation));
         await this.driver.findElement(this.dealsNavigation).click();
